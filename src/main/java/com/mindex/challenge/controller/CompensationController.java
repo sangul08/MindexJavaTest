@@ -25,14 +25,13 @@ public class CompensationController {
     @PostMapping("/compensation")
     public Compensation addCompensation(@RequestBody Compensation compensation) throws ParseException {
         LOG.debug("Received add compensation request create request for [{}]", compensation);
-//        if(compensationRepository.findByEmployee(compensation.getEmployee()) == null){
-//            LOG.debug("Adding compensation");
-//            return compensationService.createCompensation(compensation);
-//        }
-//        else{
-//            return compensationService.update(compensation);
-//        }
-        return compensationService.createCompensation(compensation);
+        if(compensationRepository.findByEmployee(compensation.getEmployee()) == null){
+            LOG.debug("Adding compensation");
+            return compensationService.createCompensation(compensation);
+        }
+        else {
+            return compensationService.update(compensation);
+        }
     }
 
     @GetMapping("/compensation/employee/{id}")

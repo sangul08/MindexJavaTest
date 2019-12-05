@@ -32,35 +32,32 @@ public class CompensationServiceImpl implements CompensationService {
         return compensation;
     }
 
-//    @Override
-//    public Compensation update(Compensation compensation) throws ParseException {
-//        LOG.debug("Updating compensation [{}]", compensation);
-//        Compensation oldCompensation = compensationRepository.findByEmployee(compensation.getEmployee());
-//
-//        //modify and update with save()
-//        LOG.debug("salary {} ", oldCompensation.getSalary());
-//        LOG.debug("salary {} ", compensation.getSalary());
-////        oldCompensation.setSalary(compensation.getSalary());
-////        LOG.debug("updated salary {} ", oldCompensation.getSalary());
-////        DateFormat readFormat = new SimpleDateFormat( "E MMM dd HH:mm:ss Z yyyy");
-////        DateFormat writeFormat = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss");
-////        Date date = null;
-////        try {
-////            date = readFormat.parse( compensation.getEffectiveDate() );
-////        } catch ( ParseException e ) {
-////            e.printStackTrace();
-////        }
-////
-////        String formattedDate = "";
-////        if( date != null ) {
-////            formattedDate = writeFormat.format( date );
-////        }
-////
-////        oldCompensation.setEffectiveDate(formattedDate);
-//        compensationRepository.save(oldCompensation);
-//        LOG.info("Updating compensation {}", oldCompensation);
-//        return oldCompensation;
-//    }
+    @Override
+    public Compensation update(Compensation compensation) throws ParseException {
+        LOG.debug("Updating compensation [{}]", compensation);
+        Compensation oldCompensation = compensationRepository.findByEmployee(compensation.getEmployee());
+
+        //modify and update with save()
+        oldCompensation.setSalary(compensation.getSalary());
+        DateFormat readFormat = new SimpleDateFormat( "E MMM dd HH:mm:ss Z yyyy");
+        DateFormat writeFormat = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = readFormat.parse( compensation.getEffectiveDate() );
+        } catch ( ParseException e ) {
+            e.printStackTrace();
+        }
+
+        String formattedDate = "";
+        if( date != null ) {
+            formattedDate = writeFormat.format( date );
+        }
+
+        oldCompensation.setEffectiveDate(formattedDate);
+        compensationRepository.save(oldCompensation);
+        LOG.info("Updating compensation {}", oldCompensation);
+        return oldCompensation;
+    }
 
     @Override
     public Compensation getCompensation(String id){
